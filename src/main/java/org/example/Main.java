@@ -1,6 +1,5 @@
 package org.example;
 
-import logic.Management;
 import org.example.database.MySQLConnection;
 import org.example.fileReader.CSVReader;
 
@@ -9,8 +8,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Main {
-    private static final String PATH = "src/main/resources/config.properties";
-    private Management management = null;
+    private static final String path = "src/main/resources/config.properties";
 
 
 
@@ -18,7 +16,7 @@ public class Main {
         Properties properties = new Properties();
 
         try {
-            InputStream input = new FileInputStream(PATH);
+            InputStream input = new FileInputStream(path);
 
             properties.load(input);
 

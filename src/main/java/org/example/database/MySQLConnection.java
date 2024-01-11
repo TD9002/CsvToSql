@@ -77,9 +77,8 @@ public class MySQLConnection implements IDatabaseConnection {
     }
 
     public void createTables(){
-       if (statusCheck){
-        try {
-            Statement stmt = getConnection().createStatement();
+               try {
+            Statement stmt = getConnection2().createStatement();
 
 
             String createTableCountries =  "CREATE TABLE countries ( " +
@@ -107,8 +106,7 @@ public class MySQLConnection implements IDatabaseConnection {
             System.out.println("Konnte Tabellen nicht anlegen " + exception.getMessage());
         }
     }
-       else System.out.println("Tabelle existiert bereits");
-    }
+
 
     //connection wenn db noch nicht existiert
     @Override
@@ -121,7 +119,7 @@ public class MySQLConnection implements IDatabaseConnection {
                 System.out.println("Error: Cannot connect to the database. 1" + ex.getMessage());
             }
         }
-        else if (this.connection != null && statusCheck) {
+/*        else if (this.connection != null && statusCheck) {
             String url = "jdbc:mysql://" + host + ":" + port + "/" + dbname;
             try {
                 connection = DriverManager.getConnection(url, username, password);
@@ -130,6 +128,7 @@ public class MySQLConnection implements IDatabaseConnection {
             }
         }
 
+        return connection;*/
         return connection;
     }
 
@@ -170,9 +169,8 @@ public class MySQLConnection implements IDatabaseConnection {
     }
     catch (SQLException e){
     System.out.println("Länder konnten nicht hinzugefügt werden " +e.getMessage() );
+    return false;
 }
-        System.out.println("Länder bereits gespeichert");
-        return false;
     }
 
     @Override
@@ -237,17 +235,18 @@ public class MySQLConnection implements IDatabaseConnection {
 
 // Connection wenn db erstellt ist
     public Connection getConnection2() {
-        if (this.connection != null) {
+
             String url = "jdbc:mysql://" + host + ":" + port + "/" + dbname;
             try {
                 connection = DriverManager.getConnection(url, username, password);
             } catch (SQLException ex) {
                 System.out.println("Error: Cannot connect to the database. 1" + ex.getMessage());
             }
+        return connection;
+
         }
 
-        return connection;
-    }
+
 
     public void deleteDB(){
         try {

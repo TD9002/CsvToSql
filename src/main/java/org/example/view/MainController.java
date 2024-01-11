@@ -5,6 +5,7 @@ import org.example.fileReader.CSVReader;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.nio.file.Path;
 
 public class MainController {
 
@@ -17,14 +18,12 @@ public class MainController {
         mainView.explorer(MainController.this::explorerButton);
         mainView.standard(MainController.this::standardButton);
         mainView.speichern(MainController.this::speicherButton);
-        mainView.speichern(MainController.this::löschButton);
+        mainView.löschen(MainController.this::löschButton);
 
     }
 
     private void löschButton(ActionEvent actionEvent) {
         MySQLConnection mySQLConnection = new MySQLConnection();
-        mySQLConnection.createDB();
-        mySQLConnection.createTables();
         mySQLConnection.deleteDB();
     }
 
@@ -43,17 +42,19 @@ public class MainController {
     }
 
     private void explorerButton(ActionEvent actionEvent) {
-        JFileChooser chooser = new JFileChooser();
-        // Erzeugung eines neuen Frames mit dem Titel "Dateiauswahl"
-        JFrame meinJFrame = new JFrame("Dateiauswahl");
-        // Wir setzen die Breite auf 450 und die Höhe 300 pixel
-        meinJFrame.setSize(450,300);
-        // Hole den ContentPane und füge diesem unseren JFileChooser hinzu
-        meinJFrame.getContentPane().add(chooser);
-        // Wir lassen unseren Frame anzeigen
-        meinJFrame.setVisible(true);
-    }
+     Path path = getOutputPath(null);
+     CSVReader.setPath(path.toString());
+     System.out.println(path.toString());
 
+
+    }
+    public static Path getOutputPath(String s) {
+        JFileChooser jd= s == null ? new JFileChooser() : new JFileChooser(s);
+        jd.setDialogTitle("Choose output file");
+        int returnVal= jd.showSaveDialog(null);
+        if (returnVal != JFileChooser.APPROVE_OPTION) return null;
+        return jd.getSelectedFile().toPath();
+    }
     public static void main(String[] args) {
     new MainController(new MainView());
     }
