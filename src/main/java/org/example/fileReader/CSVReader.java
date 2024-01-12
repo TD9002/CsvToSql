@@ -35,7 +35,6 @@ public class CSVReader {
                 String country = attributes[0].replace("\"","");
                 String city = attributes[1].replace("\"","");
                 listLocation.add(new Locations(city,country));
-
                 line = bufferedReader.readLine();
             }
 
