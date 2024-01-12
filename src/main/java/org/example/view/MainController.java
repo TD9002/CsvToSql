@@ -43,8 +43,14 @@ public class MainController {
 
     private void explorerButton(ActionEvent actionEvent) {
      Path path = getOutputPath(null);
-     CSVReader.setPath(path.toString());
-     System.out.println(path.toString());
+     try {
+         CSVReader.setPath(path.toString());
+         System.out.println(path.toString());
+
+     }
+     catch (NullPointerException e){
+         System.out.println(e.getMessage());
+     }
 
 
     }

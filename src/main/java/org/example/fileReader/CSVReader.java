@@ -13,8 +13,6 @@ import java.util.List;
 public class CSVReader {
     private static  String path = "src/main/resources/country-list.csv";
     private static List<Locations> listLocation;
-    private static List<String> capitalCities;
-    private static List<String> countryList;
 
     public static List<Locations> getListLocation() {
         return listLocation;
@@ -23,14 +21,6 @@ public class CSVReader {
     public static void setPath(String path) {
         CSVReader.path = path;
         System.out.println("Pfard=" +path);
-    }
-
-    public static List<String> getCapitalCities() {
-        return capitalCities;
-    }
-
-    public static List<String> getCountries() {
-        return countryList;
     }
 
     public static void readCsv(){
