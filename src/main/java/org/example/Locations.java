@@ -3,17 +3,7 @@ package org.example;
 public class Locations {
     private String city, country;
 
-    public String getCity() {
-        return city;
-    }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
     public Locations(String city, String country) {
         this.city = city;
@@ -26,6 +16,10 @@ public class Locations {
                 "city='" + city + '\'' +
                 ", country='" + country + '\'' +
                 '}';
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public String getCountry() {

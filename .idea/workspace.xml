@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4dfd1a8-8930-460a-8775-d0857443bac6" name="Changes" comment="code ein bisschen  mehr aufgeräumt" />
+    <list default="true" id="f4dfd1a8-8930-460a-8775-d0857443bac6" name="Changes" comment="Readme hinzugefügt">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Locations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Locations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/database/MySQLConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/MySQLConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MainController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -170,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1705046531211</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Readme hinzugefügt">
+      <created>1705047153201</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1705047153201</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,6 +203,7 @@
     <MESSAGE value="unnötige klassen gelöscht" />
     <MESSAGE value="code ein bisschen aufgeräumt, filechooser hinzugefügt" />
     <MESSAGE value="code ein bisschen  mehr aufgeräumt" />
-    <option name="LAST_COMMIT_MESSAGE" value="code ein bisschen  mehr aufgeräumt" />
+    <MESSAGE value="Readme hinzugefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Readme hinzugefügt" />
   </component>
 </project>

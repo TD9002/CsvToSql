@@ -54,7 +54,7 @@ public class MainController {
 
 
     }
-    public static Path getOutputPath(String s) {
+    public Path getOutputPath(String s) {
         JFileChooser jd= s == null ? new JFileChooser() : new JFileChooser(s);
         jd.setDialogTitle("Choose output file");
         int returnVal= jd.showSaveDialog(null);

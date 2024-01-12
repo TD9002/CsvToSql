@@ -233,7 +233,7 @@ public class MySQLConnection implements IDatabaseConnection {
         }
     }
 
-// Connection wenn db erstellt ist
+    // Connection wenn db erstellt ist
     public Connection getConnection2() {
 
             String url = "jdbc:mysql://" + host + ":" + port + "/" + dbname;
