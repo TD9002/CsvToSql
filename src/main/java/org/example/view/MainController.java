@@ -23,17 +23,17 @@ public class MainController {
     }
 
     private void löschButton(ActionEvent actionEvent) {
-        MySQLConnection mySQLConnection = new MySQLConnection();
-        mySQLConnection.deleteDB();
+     //   MySQLConnection mySQLConnection = new MySQLConnection();
+     //   mySQLConnection.deleteDB();
     }
 
     private void speicherButton(ActionEvent actionEvent) {
         CSVReader.readCsv();
-        MySQLConnection mySQLConnection = new MySQLConnection();
-        mySQLConnection.createDB();
+  //      MySQLConnection mySQLConnection = new MySQLConnection();
+/*        mySQLConnection.createDB();
         mySQLConnection.createTables();
         mySQLConnection.insertCountries(CSVReader.getListLocation());
-        mySQLConnection.insertCities(CSVReader.getListLocation());
+        mySQLConnection.insertCities(CSVReader.getListLocation());*/
 
     }
 

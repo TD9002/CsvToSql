@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.database.MySQLConnection;
 import org.example.fileReader.CSVReader;
+import org.example.fileReader.PropertyReader;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -13,11 +14,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        CSVReader.readCsv();
+     //   CSVReader.readCsv();
         MySQLConnection mySQLConnection = new MySQLConnection();
-        mySQLConnection.createDB();
-        mySQLConnection.createTables();
-        mySQLConnection.deleteDB();
+        mySQLConnection.getConnection();
+
        // mySQLConnection.insertCountries(CSVReader.getListLocation());
      //   mySQLConnection.insertCities(CSVReader.getListLocation());
        // System.out.println(CSVReader.getListLocation().get(158).getCity());

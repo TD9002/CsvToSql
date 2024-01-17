@@ -7,12 +7,13 @@ import java.util.List;
 
 public interface IDatabaseConnection {
     Connection getConnection();
+    boolean addCities(List<Locations> locations);
+    boolean addCountries(List<Locations> locations);
 
 
 
-    boolean csvToSql(List<Locations> locations);
 
-    boolean insertCountries(List<Locations> locations);
-    boolean insertCities(List<Locations> locations);
+
+
 
 }
