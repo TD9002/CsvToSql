@@ -15,8 +15,8 @@ public class Main {
     public static void main(String[] args) {
 
      //   CSVReader.readCsv();
-        MySQLConnection mySQLConnection = new MySQLConnection();
-        mySQLConnection.getConnection();
+        MySQLConnection mySQLConnection = new MySQLConnection(PropertyReader.readProperties());
+        System.out.println(mySQLConnection.getDbName());
 
        // mySQLConnection.insertCountries(CSVReader.getListLocation());
      //   mySQLConnection.insertCities(CSVReader.getListLocation());

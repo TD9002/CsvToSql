@@ -10,9 +10,11 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class MySQLConnection implements IDatabaseConnection {
-    private  String host, username, password, dbName, tableCity, tableCountry, columnCountry;
+    private  String host, username, password, dbName, tableCity ="tbl_city", tableCountry = "tbl_country",
+            columnCountry = "country", columnIdCountry = "idCountry", columnIdCity = "idCity", columnCity = "city";
     private  int port;
     private Connection connection = null;
+    private boolean databaseCheck = false;
 
 
    public MySQLConnection(Properties properties) {
@@ -25,6 +27,9 @@ public class MySQLConnection implements IDatabaseConnection {
         }
     }
 
+    public String getDbName() {
+        return dbName;
+    }
 
     //connection wenn db noch nicht existiert
     @Override
@@ -51,6 +56,67 @@ public class MySQLConnection implements IDatabaseConnection {
         return connection;
     }
 
+    public void createDB(){
+
+        if (!databaseCheck()){
+            try {
+                System.out.println(dbName);
+                Statement stmt = getConnection().createStatement();
+
+                String createDatabase = "CREATE DATABASE IF NOT EXISTS " + dbName; //creates database
+                stmt.executeUpdate(createDatabase);
+
+                connection.close();
+                stmt.close();
+                System.out.println("<< Database created successfully >>");
+                databaseCheck = true;
+            }
+            catch (SQLException exception){
+                System.out.println("Konnte DB nicht anlegen " + exception.getMessage());
+            }
+
+        }
+        else System.out.println("Database already exists.");
+    }
+
+    public void createTables(){
+        try {
+            Statement stmt = getConnectionIfDatabaseExists().createStatement();
+
+
+            String createTableCountries =  "CREATE TABLE " +
+                    tableCountry +"( " +
+                    columnIdCountry + " int NOT NULL AUTO_INCREMENT, " +
+                    columnCountry + " varchar(255) NOT NULL, PRIMARY KEY (" + columnIdCountry + "))";
+
+
+            String createTableCities = "CREATE TABLE " + tableCity + "( " +
+                    columnIdCity + " int NOT NULL AUTO_INCREMENT, " +
+                    columnCity + " varchar(255) NOT NULL," +
+                    columnIdCountry + " int NOT NULL," +
+                    "PRIMARY KEY (" +
+                    columnIdCity + ")," +
+                    "FOREIGN KEY (" +
+                    columnIdCountry +
+                    ") REFERENCES " + tableCountry +
+                    "(" + columnIdCountry + "))";
+
+
+
+
+            stmt.executeUpdate(createTableCountries);
+            stmt.executeUpdate(createTableCities);
+
+            connection.close();
+            stmt.close();
+
+            System.out.println("Tabellen angelegt");
+        }
+        catch (SQLException exception){
+            System.out.println("Konnte Tabellen nicht anlegen " + exception.getMessage());
+        }
+    }
+
     public boolean databaseCheck(){
         List<String> databaseNames = new ArrayList<>();
         try {
@@ -72,20 +138,23 @@ public class MySQLConnection implements IDatabaseConnection {
         return false;
     }
 
-    public boolean addCities(List<Locations> locations){
+    public boolean addCountries(List<Locations> locations){
             String country = null;
             try {
-                Statement statement = connection.createStatement();
+                Statement statement = getConnectionIfDatabaseExists().createStatement();
 
                 for (int i = 0; i < locations.size(); i++) {
 
-                    String querry = "SELECT country from countries WHERE country =" + "\"" +
+                    String querry = "SELECT " +
+                            columnCountry + " from " +
+                            tableCountry + " WHERE " +
+                            columnCountry + " =" + "\"" +
                             locations.get(i).getCountry() + "\"";
 
                     ResultSet resultSet = statement.executeQuery(querry);
 
                     if (resultSet.next()) {
-                        country = resultSet.getString("country");
+                        country = resultSet.getString(columnCountry);
                     }
 
                     if (!Objects.equals(country, locations.get(i).getCountry())) {
@@ -94,6 +163,7 @@ public class MySQLConnection implements IDatabaseConnection {
                                 columnCountry + ") values (" + "\"" +
                                 locations.get(i).getCountry() + "\");";
 
+                        System.out.println(querry);
                         statement.executeUpdate(querry);
                     }
                 }
@@ -107,7 +177,7 @@ public class MySQLConnection implements IDatabaseConnection {
         }
 
     @Override
-    public boolean addCountries(List<Locations> locations) {
+    public boolean addCities(List<Locations> locations) {
 
         ResultSet resultSet = null;
         int id = 99999999;
@@ -115,29 +185,36 @@ public class MySQLConnection implements IDatabaseConnection {
         int countryForeignID = 888888;
 
         try {
-            Statement statement = connection.createStatement();
+            Statement statement = getConnectionIfDatabaseExists().createStatement();
 
             for (int i = 0; i <locations.size() ; i++) {
 
                 //lese id des landes für betreffende Stadt aus
 
-                String querry = "SELECT ID_COUNTRY,country from countries WHERE country =" + "\"" +
+                String querry = "SELECT " + columnIdCountry + "," +
+                        columnCountry + " from " +
+                        tableCountry + " WHERE " +
+                        columnCountry + " =" + "\"" +
                         locations.get(i).getCountry() +"\"";
 
                 resultSet = statement.executeQuery(querry);
                 if (resultSet.next()){
-                    id = resultSet.getInt(column_Idcountry);
+                    id = resultSet.getInt(columnIdCountry);
                 }
 
                 // suche ob stadt bereits existiert
-                querry = "SELECT city, ID_COUNTRY from cities WHERE city =" + "\"" +
+                querry = "SELECT " + columnCity + "," +
+                        columnIdCountry + " from " +
+                        tableCity + " WHERE " +
+                        columnCity + "= \"" +
                         locations.get(i).getCity() +"\"";
+
 
                 resultSet = statement.executeQuery(querry);
 
                 if (resultSet.next()){
-                    city = resultSet.getString("city");
-                    countryForeignID = resultSet.getInt((column_Idcountry));
+                    city = resultSet.getString(columnCity);
+                    countryForeignID = resultSet.getInt((columnIdCountry));
 
                 }
 
@@ -146,26 +223,38 @@ public class MySQLConnection implements IDatabaseConnection {
                 // @todo im moment gibt es keine begrenzung für städte mit gleichen namen aber unterschiedlichen Land
                 if (!Objects.equals(city, locations.get(i).getCity()) || (Objects.equals(city,locations.get(i).getCity()) && countryForeignID != id))
                 {
-                    querry = "Insert into " + tbl_city +
+                    querry = "Insert into " + tableCity +
                             "(" +
-                            column_city +"," + column_Idcountry + ") values (" + "\"" +
+                            columnCity +"," + columnIdCountry + ") values (" + "\"" +
                             locations.get(i).getCity() + "\", " +
                             id +
                             ");";
-                    System.out.println(querry);
 
                     statement.executeUpdate(querry);
                 }
             }
             statement.close();
-            System.out.println("Stätdte wurden gespeichert.");
+            System.out.println("Städte wurden gespeichert.");
             return true;
         }
         catch (SQLException e){
-            System.out.println("Daten konnten nicht hinzugefügt werden. " + e.getMessage());
+            System.out.println("Städte konnten nicht hinzugefügt werden. " + e.getMessage());
             return false;
         }
-        return false;
+    }
+
+    public void deleteDB(){
+        try {
+            Statement statement = connection.createStatement();
+
+            String querry = "DROP DATABASE " + dbName;
+
+            statement.executeUpdate(querry);
+            System.out.println(dbName + " wurde erfolgreich gelöscht");
+        }
+        catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 
 

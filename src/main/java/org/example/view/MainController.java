@@ -1,15 +1,21 @@
 package org.example.view;
 
+import org.example.Locations;
 import org.example.database.MySQLConnection;
 import org.example.fileReader.CSVReader;
+import org.example.fileReader.PropertyReader;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Properties;
 
 public class MainController {
 
     private MainView mainView;
+    private Properties properties;
+    private MySQLConnection mySQLConnection;
 
     public MainController(MainView mainView) {
         this.mainView = mainView;
@@ -19,21 +25,25 @@ public class MainController {
         mainView.standard(MainController.this::standardButton);
         mainView.speichern(MainController.this::speicherButton);
         mainView.löschen(MainController.this::löschButton);
+        properties = PropertyReader.readProperties();
+        mySQLConnection = new MySQLConnection(properties);
+        CSVReader.readCsv();
+        System.out.println(mySQLConnection.getDbName());
+
+
+
 
     }
 
     private void löschButton(ActionEvent actionEvent) {
-     //   MySQLConnection mySQLConnection = new MySQLConnection();
-     //   mySQLConnection.deleteDB();
+        mySQLConnection.deleteDB();
     }
 
     private void speicherButton(ActionEvent actionEvent) {
-        CSVReader.readCsv();
-  //      MySQLConnection mySQLConnection = new MySQLConnection();
-/*        mySQLConnection.createDB();
+        mySQLConnection.createDB();
         mySQLConnection.createTables();
-        mySQLConnection.insertCountries(CSVReader.getListLocation());
-        mySQLConnection.insertCities(CSVReader.getListLocation());*/
+        mySQLConnection.addCountries(CSVReader.getListLocation());
+        mySQLConnection.addCities(CSVReader.getListLocation());
 
     }
 
