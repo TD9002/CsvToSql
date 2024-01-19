@@ -15,7 +15,7 @@ public class CSVReader {
     private static List<Locations> listLocation;
     public static void setPath(String path) {
         CSVReader.path = path;
-        System.out.println("Pfard=" +path);
+        System.out.println("Pfad=" +path);
     }
 
     public static List<Locations> readCsv(){

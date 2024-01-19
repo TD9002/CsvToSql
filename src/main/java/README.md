@@ -17,6 +17,7 @@ Die CSV Daten müssen folgendem Format folgen:
 
 Das Programm wird über die MainControllerView gestartet.
 Man kann zwischen einer Standarddatei und einer eigenen Datei wählen, die Standarddatei ist dem Programm beigefügt.
+Für die Datenbakverbidnung wird eine Propertyfile genutzt in der die 
 In der Datenbank selbst werden die Daten über den Button speichern angelegt.
 Die Datenbank kann mit dem Button löschen wieder gelöscht werden.
 

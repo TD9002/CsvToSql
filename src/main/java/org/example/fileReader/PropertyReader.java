@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyReader {
-    private static final String PATH = "src/main/resources/config.properties_example";
+    private static final String PATH = "src/main/resources/config.properties";
     public static  Properties readProperties(){
         try {
             InputStream input = new FileInputStream(PATH);
