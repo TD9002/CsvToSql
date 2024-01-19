@@ -203,6 +203,7 @@ public class MySQLConnection implements IDatabaseConnection {
                 }
             }
             statement.close();
+            connection.close();
             System.out.println("Städte wurden gespeichert.");
             return true;
         }
