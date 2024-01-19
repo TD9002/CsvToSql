@@ -106,27 +106,6 @@ public class MySQLConnection implements IDatabaseConnection {
         }
     }
 
-    public boolean databaseCheck(){
-        List<String> databaseNames = new ArrayList<>();
-        try {
-            ResultSet resultSet = getConnection().getMetaData().getCatalogs();
-            while (resultSet.next()) {
-                databaseNames.add(resultSet.getString(1));
-            }
-
-            resultSet.close();
-        } catch (SQLException exception) {
-            System.out.println(exception.getMessage());
-        }
-
-        for (int i = 0; i <databaseNames.size() ; i++) {
-            if (Objects.equals(databaseNames.get(i), dbName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean addCountries(List<Locations> locations){
             String country = null;
             try {
@@ -157,6 +136,7 @@ public class MySQLConnection implements IDatabaseConnection {
                     }
                 }
                 statement.close();
+                connection.close();
                 return true;
 
             } catch (SQLException e) {
@@ -223,6 +203,7 @@ public class MySQLConnection implements IDatabaseConnection {
                 }
             }
             statement.close();
+            connection.close();
             System.out.println("Städte wurden gespeichert.");
             return true;
         }
@@ -240,6 +221,7 @@ public class MySQLConnection implements IDatabaseConnection {
 
             statement.executeUpdate(querry);
             System.out.println(dbName + " wurde erfolgreich gelöscht");
+            connection.close();
         }
         catch (SQLException e){
             System.out.println(e.getMessage());
