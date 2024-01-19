@@ -203,7 +203,6 @@ public class MySQLConnection implements IDatabaseConnection {
                 }
             }
             statement.close();
-            connection.close();
             System.out.println("Städte wurden gespeichert.");
             return true;
         }
@@ -221,7 +220,6 @@ public class MySQLConnection implements IDatabaseConnection {
 
             statement.executeUpdate(querry);
             System.out.println(dbName + " wurde erfolgreich gelöscht");
-            connection.close();
         }
         catch (SQLException e){
             System.out.println(e.getMessage());
