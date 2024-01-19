@@ -16,19 +16,18 @@ public class MainController {
     private MainView mainView;
     private Properties properties;
     private MySQLConnection mySQLConnection;
-
+    private List<Locations> locations;
     public MainController(MainView mainView) {
         this.mainView = mainView;
-
 
         mainView.explorer(MainController.this::explorerButton);
         mainView.standard(MainController.this::standardButton);
         mainView.speichern(MainController.this::speicherButton);
         mainView.löschen(MainController.this::löschButton);
+
         properties = PropertyReader.readProperties();
         mySQLConnection = new MySQLConnection(properties);
-        CSVReader.readCsv();
-        System.out.println(mySQLConnection.getDbName());
+        locations = CSVReader.readCsv();
 
 
 
@@ -42,8 +41,8 @@ public class MainController {
     private void speicherButton(ActionEvent actionEvent) {
         mySQLConnection.createDB();
         mySQLConnection.createTables();
-        mySQLConnection.addCountries(CSVReader.getListLocation());
-        mySQLConnection.addCities(CSVReader.getListLocation());
+        mySQLConnection.addCountries(locations);
+        mySQLConnection.addCities(locations);
 
     }
 

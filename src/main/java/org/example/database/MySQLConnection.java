@@ -1,8 +1,6 @@
 package org.example.database;
 
 import org.example.Locations;
-import org.example.fileReader.PropertyReader;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +8,11 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class MySQLConnection implements IDatabaseConnection {
-    private  String host, username, password, dbName, tableCity ="tbl_city", tableCountry = "tbl_country",
+    private  String host, username, password, dbName;
+    private final String tableCity ="tbl_city", tableCountry = "tbl_country",
             columnCountry = "country", columnIdCountry = "idCountry", columnIdCity = "idCity", columnCity = "city";
     private  int port;
     private Connection connection = null;
-    private boolean databaseCheck = false;
-
 
    public MySQLConnection(Properties properties) {
         if (properties != null){
@@ -25,10 +22,6 @@ public class MySQLConnection implements IDatabaseConnection {
             password =properties.getProperty("password");
             port = Integer.valueOf(properties.getProperty("port"));
         }
-    }
-
-    public String getDbName() {
-        return dbName;
     }
 
     //connection wenn db noch nicht existiert
@@ -45,6 +38,7 @@ public class MySQLConnection implements IDatabaseConnection {
         return connection;
     }
 
+    //connection wenn existiert
     public Connection getConnectionIfDatabaseExists() {
 
         String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
@@ -58,8 +52,7 @@ public class MySQLConnection implements IDatabaseConnection {
 
     public void createDB(){
 
-        if (!databaseCheck()){
-            try {
+                    try {
                 System.out.println(dbName);
                 Statement stmt = getConnection().createStatement();
 
@@ -69,15 +62,11 @@ public class MySQLConnection implements IDatabaseConnection {
                 connection.close();
                 stmt.close();
                 System.out.println("<< Database created successfully >>");
-                databaseCheck = true;
             }
             catch (SQLException exception){
                 System.out.println("Konnte DB nicht anlegen " + exception.getMessage());
             }
-
-        }
-        else System.out.println("Database already exists.");
-    }
+   }
 
     public void createTables(){
         try {
@@ -218,7 +207,6 @@ public class MySQLConnection implements IDatabaseConnection {
 
                 }
 
-
                 // speichere stadt ein wenn nicht vorhanden, oder bei gleichem namen aber in einem anderen land
                 // @todo im moment gibt es keine begrenzung für städte mit gleichen namen aber unterschiedlichen Land
                 if (!Objects.equals(city, locations.get(i).getCity()) || (Objects.equals(city,locations.get(i).getCity()) && countryForeignID != id))
@@ -231,6 +219,7 @@ public class MySQLConnection implements IDatabaseConnection {
                             ");";
 
                     statement.executeUpdate(querry);
+                    System.out.println(querry);
                 }
             }
             statement.close();
@@ -245,7 +234,7 @@ public class MySQLConnection implements IDatabaseConnection {
 
     public void deleteDB(){
         try {
-            Statement statement = connection.createStatement();
+            Statement statement = getConnectionIfDatabaseExists().createStatement();
 
             String querry = "DROP DATABASE " + dbName;
 

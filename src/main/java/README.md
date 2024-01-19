@@ -15,7 +15,6 @@ Die CSV Daten müssen folgendem Format folgen:
 "city2",country2"
 ....
 
-
 Das Programm wird über die MainControllerView gestartet.
 Man kann zwischen einer Standarddatei und einer eigenen Datei wählen, die Standarddatei ist dem Programm beigefügt.
 In der Datenbank selbst werden die Daten über den Button speichern angelegt.

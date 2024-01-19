@@ -13,17 +13,12 @@ import java.util.List;
 public class CSVReader {
     private static  String path = "src/main/resources/country-list.csv";
     private static List<Locations> listLocation;
-
-    public static List<Locations> getListLocation() {
-        return listLocation;
-    }
-
     public static void setPath(String path) {
         CSVReader.path = path;
         System.out.println("Pfard=" +path);
     }
 
-    public static void readCsv(){
+    public static List<Locations> readCsv(){
 
         listLocation = new ArrayList<>();
 
@@ -32,14 +27,18 @@ public class CSVReader {
             String line = bufferedReader.readLine();
             while (line != null){
                 String[] attributes = line.split(",");
-                String country = attributes[0].replace("\"","");
+                String country = attributes[0].replace("\"","") ;
                 String city = attributes[1].replace("\"","");
                 listLocation.add(new Locations(city,country));
                 line = bufferedReader.readLine();
             }
+            System.out.println(listLocation.toString());
+            return listLocation;
+
 
         } catch (IOException ioe) {
             ioe.printStackTrace();
+            return null;
         }
     }
 }

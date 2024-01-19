@@ -9,18 +9,14 @@ public class PropertyReader {
     public static  Properties readProperties(){
         try {
             InputStream input = new FileInputStream(PATH);
-
             Properties properties = new Properties();
             properties.load(input);
-            System.out.println(properties.get("host"));
             return  properties;
-
         }
         catch (Exception exception){
             System.out.println("Error: Cannot read properties!\n" + exception.getMessage());
             System.exit(-1);
             return null;
-
         }
     }
 }
