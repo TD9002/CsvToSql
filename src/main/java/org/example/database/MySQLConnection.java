@@ -59,8 +59,8 @@ public class MySQLConnection implements IDatabaseConnection {
                 String createDatabase = "CREATE DATABASE IF NOT EXISTS " + dbName; //creates database
                 stmt.executeUpdate(createDatabase);
 
-                connection.close();
                 stmt.close();
+                connection.close();
                 System.out.println("<< Database created successfully >>");
             }
             catch (SQLException exception){
@@ -96,8 +96,8 @@ public class MySQLConnection implements IDatabaseConnection {
             stmt.executeUpdate(createTableCountries);
             stmt.executeUpdate(createTableCities);
 
-            connection.close();
             stmt.close();
+            connection.close();
 
             System.out.println("Tabellen angelegt");
         }
