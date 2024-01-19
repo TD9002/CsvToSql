@@ -38,7 +38,7 @@ public class MySQLConnection implements IDatabaseConnection {
         return connection;
     }
 
-    //connection wenn existiert
+    //connection wenn DB existiert
     public Connection getConnectionIfDatabaseExists() {
 
         String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
@@ -245,6 +245,4 @@ public class MySQLConnection implements IDatabaseConnection {
             System.out.println(e.getMessage());
         }
     }
-
-
-}
+   }
